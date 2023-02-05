@@ -43,7 +43,6 @@ if (isset($_POST["edit-article-save"]))
         $errorMsg = "Field can't be empty";
     }
 
-    $articleDao = new ArticleDAO();
     $article = $articleDao->findById($_POST["edit-article-id"]);
     $article->setTitle($title);
     $article->setArticleLink($articleLink);
@@ -61,48 +60,15 @@ if (isset($_POST["edit-article-cancel"]))
 }
 ?>
 
-<!--<div class="container">-->
-<!--    <h3>Sign in to News Portal</h3>-->
-<!--    --><?php //if ($errorMsg != ""): ?>
-<!--        <div class="warning">;-->
-<!--            --><?php //echo $errorMsg; ?>
-<!--        </div>-->
-<!--    --><?php //endif; ?>
-<!---->
-<!--    <form action="login.php" method="post">-->
-<!--        <div class="sign-in">-->
-<!--            <div class="input-group">-->
-<!--                <label for="login-email">Email</label>-->
-<!--                <input type="email" name="login-email" id="login-email" placeholder="Email">-->
-<!--            </div>-->
-<!--            <div class="input-group">-->
-<!--                <label for="login-password">Password</label>-->
-<!--                <input type="password" name="login-password" id="login-password" placeholder="Password">-->
-<!--            </div>-->
-<!--            <button type="submit" name="login-submit" id="login-submit">Sign in</button>-->
-<!--            <div class="input-group">-->
-<!--                New to News Portal?-->
-<!--                <button>-->
-<!--                    <a href="--><?php //echo REGISTRATION_PAGE ?><!--">-->
-<!--                        Create an account-->
-<!--                    </a>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-<!---->
-<!---->
-<!--</div>-->
-
 <div class="container">
-    <h3>Edit the article</h3>
+    <h2>Edit the article</h2>
     <?php if (isset($errorMsg)) : ?>
         <p>
             <?php echo $errorMsg; ?>
         </p>
     <?php endif; ?>
     <form action="edit-article.php" method="post">
-        <div class="sign-in">
+        <div class="form-container">
             <input
                     type="hidden"
                     name="edit-article-id"
@@ -126,12 +92,6 @@ if (isset($_POST["edit-article-cancel"]))
                         id="edit-article-brief"
                     ><?php echo $article->getBrief(); ?>
                 </textarea>
-<!--                <input-->
-<!--                        type="text"-->
-<!--                        name="edit-article-brief"-->
-<!--                        id="edit-article-brief"-->
-<!--                        value="--><?php //echo $article->getBrief(); ?><!--"-->
-<!--                >-->
             </div>
             <div class="input-group">
                 <label for="edit-article-link">Article location</label>

@@ -53,13 +53,13 @@ if (isset($_POST["login-submit"]))
 <div class="container">
     <h3>Sign in to News Portal</h3>
     <?php if ($errorMsg != ""): ?>
-        <div class="warning">;
+        <div class="form-warning">;
             <?php echo $errorMsg; ?>
         </div>
     <?php endif; ?>
 
     <form action="login.php" method="post">
-        <div class="sign-in">
+        <div class="form-container">
             <div class="input-group">
                 <label for="login-email">Email</label>
                 <input type="email" name="login-email" id="login-email" placeholder="Email">
@@ -71,16 +71,12 @@ if (isset($_POST["login-submit"]))
             <button type="submit" name="login-submit" id="login-submit">Sign in</button>
             <div class="input-group">
                 New to News Portal?
-                <button>
-                    <a href="<?php echo REGISTRATION_PAGE ?>">
-                         Create an account
-                    </a>
+                <button onclick="load(PAGES.REGISTRATION)">
+                    Create an account
                 </button>
             </div>
         </div>
     </form>
-
-
 </div>
 
 <?php include "app/include/footer.php"; ?>

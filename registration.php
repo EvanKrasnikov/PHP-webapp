@@ -54,35 +54,43 @@ if (isset($_POST["submit"]))
 ?>
 
 <div class="container">
-    <h3 class="text-primary">Create Account</h3>
+    <h2>Create Account</h2>
+    <?php if ($errorMsg != ""): ?>
+        <div class="form-warning">;
+            <?php echo $errorMsg; ?>
+        </div>
+    <?php endif; ?>
+
     <form action="registration.php" method="post">
-        <div class="input-group mb-3">
-            <label for="email-field"></label>
-            <input type="email" class="form-control" name="email" id="email-field" placeholder="Email">
+        <div class="form-container">
+            <div class="input-group">
+                <label for="registration-email">Email</label>
+                <input type="email" name="registration-email" id="registration-email" placeholder="Email">
+            </div>
+            <div class="input-group">
+                <label for="registration-firstname">First name</label>
+                <input type="email" name="registration-firstname" id="registration-firstname" placeholder="First name">
+            </div>
+            <div class="input-group">
+                <label for="registration-lastname">Last name</label>
+                <input type="email" name="registration-lastname" id="registration-lastname" placeholder="Last name">
+            </div>
+            <div class="input-group">
+                <label for="registration-password">Password</label>
+                <input type="password" name="registration-password" id="registration-password" placeholder="Password">
+            </div>
+            <div class="input-group">
+                <label for="registration-password2">Confirm password</label>
+                <input type="password" name="registration-password2" id="registration-password2" placeholder="Confirm password">
+            </div>
+            <button type="submit" name="registration-submit" id="registration-submit">Sign up</button>
+            <div class="input-group">
+                Already have an account?
+                <button onclick="load(PAGES.LOGIN)">
+                    Sign in
+                </button>
+            </div>
         </div>
-        <div class="input-group mb-3">
-            <label for="firstname-field"></label>
-            <input type="email" class="form-control" name="firstname" id="firstname-field" placeholder="First name">
-        </div>
-        <div class="input-group mb-3">
-            <label for="lastname-field"></label>
-            <input type="email" class="form-control" name="lastname" id="lastname-field" placeholder="Last name">
-        </div>
-        <div class="input-group mb-3">
-            <label for="password-field"></label>
-            <input type="password" class="form-control" name="password" id="password-field" placeholder="Password">
-        </div>
-        <div class="input-group mb-3">
-            <label for="password2-field"></label>
-            <input type="password" class="form-control" name="password2" id="password2-field" placeholder="Confirm password">
-        </div>
-        <div class="input-group mb-3">
-            <input type="submit" class="form-control btn btn-primary" name="submit" id="submit-button" value="Sign up">
-        </div
-        <p class="text-center">
-            Already have an account?
-            <a href="<?php echo LOGIN_PAGE; ?>">Sign in</a>
-        </p>
     </form>
 </div>
 

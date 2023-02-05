@@ -20,13 +20,7 @@ include "app/include/header.php";
 
 
 <div class="container">
-    <div class="title"><h2>Last publications</h2></div>
-
-    <?php
-    foreach ($_SESSION as $a){
-        echo $a;
-    }
-    ?>
+    <h2>Last publications</h2>
 
     <?php
     $articleDao = new ArticleDAO();
@@ -41,68 +35,33 @@ include "app/include/header.php";
             </div>
             <div class="card-info-wrapper">
                 <div class="card-info">
-                    <p><strong><?php echo $article->getTitle(); ?></strong></p>
+                    <p>
+                        <strong>
+                            <a href="<?php echo $article->getArticleLink() ?>">
+                                <?php echo $article->getTitle(); ?>
+                            </a>
+                        </strong>
+                    </p>
                     <p><?php echo $article->getBrief(); ?></p>
-                    <span>
-
-            </span>
-                    <i><?php echo $article->getAuthor(); ?></i>
-                    <p><?php echo $article->getCreationDate(); ?></p>
+                    <div class="card-info-author">
+                        <i><?php echo $article->getAuthor(); ?></i>
+                        <i><?php echo $article->getCreationDate(); ?></i>
+                    </div>
                 </div>
                 <?php if (isset($_SESSION["email"])): ?>
-                    <div class="article-manage">
-                        <a href="edit-article.php?id=<?php echo $article->getId(); ?>" class="edit_btn" >
-                            <button>
-                                Edit
-                            </button>
-                        </a>
-                        <a href="delete-article.php?id=<?php echo $article->getId(); ?>" class="del_btn">
-                            <button>
-                                Delete
-                            </button>
-                        </a>
+                    <div class="card-manage">
+                        <button onclick="load('edit-article.php?id=<?php echo $article->getId(); ?>')">
+                            Edit
+                        </button>
+                        <button onclick="load('delete-article.php?id=<?php echo $article->getId(); ?>')">
+                            Delete
+                        </button>
                     </div>
                 <?php endif; ?>
             </div>
         </article>
     <?php endforeach; ?>
 </div>
-
-
-
-
-
-
-<!--<div class="container">-->
-<!--    <div class="content row">-->
-<!--        <div class="main-content col-md-9 col-12">-->
-<!--            <h2>Last publications</h2>-->
-<!---->
-<!--            --><?php
-//            $articleDao = new ArticleDAO();
-//            $articles = $articleDao->findAll();
-//
-//            foreach ($articles as $key => $array):
-//                $article = Article::fromArray($array);
-//            ?>
-<!--            <div class="row mb-3 shadow-lg">-->
-<!--                <div class="img col-4">-->
-<!--                    <img src="--><?php //echo $article->getImageLink() ?><!--" alt="--><?php //echo $article->getArticleLink() ?><!--">-->
-<!--                </div>-->
-<!--                <div class="col-8 ">-->
-<!--                    <h3>-->
-<!--                        <a href="--><?php //echo $article->getArticleLink() ?><!--">--><?php //echo $article->getTitle() ?><!--</a>-->
-<!--                    </h3>-->
-<!--                    <i class="fa-solid fa-user">--><?php //echo $article->getAuthor() ?><!--</i>-->
-<!--                    <i class="fa-regular fa-calendar">--><?php //echo $article->getCreationDate() ?><!--</i>-->
-<!--                    <p class="preview-text">--><?php //echo $article->getBrief() ?><!--</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            --><?php //endforeach; ?>
-<!---->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <?php include "app/include/footer.php"; ?>
 </body>

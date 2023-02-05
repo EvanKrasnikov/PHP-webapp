@@ -1,31 +1,27 @@
 <?php include "app/include/session.php"; ?>
+<script src="/assets/js/script.js"></script>
 
 <header>
-    <div class="shadow">
-        <h1>
-            <a class="nav-left" href="<?php echo BASE_URL; ?>">
-                News Portal
-            </a>
-        </h1>
-        <?php if (isset($_SESSION["email"])): ?>
-            <div class="login-group">
-                <p class="username">
-                    <?php echo "Hello, " . $_SESSION["first_name"] ?>
-                </p>
-                <a href="<?php echo LOGOUT_PAGE; ?>">
-                    <button class="nav-right">Logout</button>
-                </a>
-            </div>
-        <?php else: ?>
-            <div class="login-group">
-                <a href="<?php echo LOGIN_PAGE; ?>">
-                    <button class="nav-right">Sign In</button>
-                </a>
-                <a href="<?php echo REGISTRATION_PAGE; ?>">
-                    <button class="nav-right">Sign Up</button>
-                </a>
-            </div>
-        <?php endif; ?>
-    </div>
-    <div class="line" />
+    <h1>
+        <a class="header-logo" href="<?php echo BASE_URL; ?>">News Portal</a>
+    </h1>
+    <?php if (isset($_SESSION["email"])): ?>
+        <div class="header-login-group">
+            <p class="username">
+                <?php echo "Hello, " . $_SESSION["first_name"] ?>
+            </p>
+            <button onclick="load(PAGES.LOGOUT)">
+                Logout
+            </button>
+        </div>
+    <?php else: ?>
+        <div class="header-login-group">
+            <button onclick="load(PAGES.LOGIN);">
+                Sign In
+            </button>
+            <button onclick="load(PAGES.REGISTRATION);">
+                Sign Up
+            </button>
+        </div>
+    <?php endif; ?>
 </header>
