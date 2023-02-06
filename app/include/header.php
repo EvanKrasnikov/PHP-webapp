@@ -1,4 +1,7 @@
-<?php include "app/include/session.php"; ?>
+<?php
+include "session.php";
+include "path.php";
+?>
 <script src="/assets/js/script.js"></script>
 
 <header>

@@ -1,7 +1,7 @@
 <?php
 
 include "BaseDAO.php";
-include "app/model/Article.php";
+include __DIR__ . "/../model/Article.php";
 
 class ArticleDAO extends BaseDAO
 {
@@ -20,7 +20,7 @@ class ArticleDAO extends BaseDAO
         );
     }
 
-    public function findById(string $id): Article
+    public function findById(string $id): ?Article
     {
         $query = "select * from news.articles where id = :id";
         $stmt = $this->conn->prepare($query);
@@ -28,7 +28,7 @@ class ArticleDAO extends BaseDAO
             ':id' => $id
         ]);
         $result = $stmt->fetch();
-        return  Article::fromArray($result);
+        return $result ? Article::fromArray($result) : null;
     }
 
     /**

@@ -11,63 +11,23 @@
 
 <body>
 <?php
-require_once "app/include/path.php";
-require_once "app/dao/ArticleDAO.php";
-require_once "app/services/ValidationService.php";
+require "app/dao/ArticleDAO.php";
+require "app/services/ValidationService.php";
 
 include "app/include/header.php";
-
-$articleDao = new ArticleDAO();
-
-if (isset($_GET["id"]))
-{
-    $article = $articleDao->findById($_GET["id"]);
-}
-//else
-//{
-//    $errorMsg = "Article id doesn't set";
-//}
-
-if (isset($_POST["edit-article-save"]))
-{
-    $validationService = new ValidationService();
-    $id = $validationService->validate($_POST["edit-article-id"]);
-    $title = $validationService->validate($_POST["edit-article-title"]);
-    $brief = $validationService->validate($_POST["edit-article-brief"]);
-    $articleLink = $validationService->validate($_POST["edit-article-link"]);
-    $imageLink = $validationService->validate($_POST["edit-article-image-link"]);
-    $author = $validationService->validate($_POST["edit-article-author"]);
-
-    if (empty($title) || empty($brief) || empty($articleLink) || empty($imageLink) || empty($author))
-    {
-        $errorMsg = "Field can't be empty";
-    }
-
-    $article = $articleDao->findById($_POST["edit-article-id"]);
-    $article->setTitle($title);
-    $article->setArticleLink($articleLink);
-    $article->setImageLink($imageLink);
-    $article->setBrief($brief);
-    $article->setAuthor($author);
-    $articleDao->update($article);
-
-    header("Location: " . INDEX_PAGE);
-}
-
-if (isset($_POST["edit-article-cancel"]))
-{
-    header("Location: " . INDEX_PAGE);
-}
 ?>
 
 <div class="container">
     <h2>Edit the article</h2>
-    <?php if (isset($errorMsg)) : ?>
-        <p>
-            <?php echo $errorMsg; ?>
-        </p>
-    <?php endif; ?>
-    <form action="edit-article.php" method="post">
+    <?php
+    include "app/include/error.php";
+    if (isset($_GET["id"]))
+    {
+        $articleDao = new ArticleDAO();
+        $article = $articleDao->findById($_GET["id"]);
+    }
+    ?>
+    <form action="app/controllers/ArticlesController.php" method="post">
         <div class="form-container">
             <input
                     type="hidden"
@@ -79,7 +39,6 @@ if (isset($_POST["edit-article-cancel"]))
                 <label for="edit-article-title">Title</label>
                 <input
                         type="text"
-                        class="form-control"
                         name="edit-article-title"
                         id="edit-article-title"
                         value="<?php echo $article->getTitle(); ?>"
@@ -97,7 +56,6 @@ if (isset($_POST["edit-article-cancel"]))
                 <label for="edit-article-link">Article location</label>
                 <input
                         type="text"
-                        class="form-control"
                         name="edit-article-link"
                         id="edit-article-link"
                         value="<?php echo $article->getArticleLink(); ?>"
@@ -123,8 +81,21 @@ if (isset($_POST["edit-article-cancel"]))
                 >
             </div>
             <div class="input-group">
-                <button type="submit" name="edit-article-save" id="edit-article-save">Save</button>
-                <button type="submit" name="edit-article-cancel" id="edit-article-cancel">Cancel</button>
+                <button
+                        type="submit"
+                        name="edit-article-save"
+                        id="edit-article-save"
+                >
+                    Save
+                </button>
+                <button
+                        type="button"
+                        name="edit-article-cancel"
+                        id="edit-article-cancel"
+                        onclick="load(PAGES.INDEX)"
+                >
+                    Cancel
+                </button>
             </div>
         </div>
     </form>

@@ -10,58 +10,12 @@
 </head>
 
 <body>
-
-<?php
-include "app/include/path.php";
-include "app/services/ValidationService.php";
-include "app/dao/UserDAO.php";
-
-include "app/include/header.php";
-
-$errorMsg = "";
-
-if (isset($_POST["submit"]))
-{
-    $validationService = new ValidationService();
-    $email = $validationService->validate($_POST["email"]);
-    $firstname = $validationService->validate($_POST["firstname"]);
-    $lastname = $validationService->validate($_POST["lastname"]);
-    $password = $validationService->validate($_POST["password"]);
-    $password2 = $validationService->validate($_POST["password2"]);
-
-    if ($email === "" || $firstname === "" || $password === "")
-    {
-        $errorMsg = "Incorrect email or password";
-    }
-    else
-    {
-        $userDao = new UserDAO();
-        $user = $userDao->findByEmail($email);
-
-        if (password_verify($password, $user->getPasswordHash()))
-        {
-            $errorMsg = "Incorrect email or password";
-        }
-        else
-        {
-            session_start();
-            $_SESSION["email"] = $user->getEmail();
-            $_SESSION["first_name"] = $user->getFirstName();
-            header("Location: " . BASE_URL);
-        }
-    }
-}
-?>
+<?php include "app/include/header.php"; ?>
 
 <div class="container">
     <h2>Create Account</h2>
-    <?php if ($errorMsg != ""): ?>
-        <div class="form-warning">;
-            <?php echo $errorMsg; ?>
-        </div>
-    <?php endif; ?>
-
-    <form action="registration.php" method="post">
+    <?php include "app/include/error.php"?>
+    <form action="app/controllers/UserController.php" method="post">
         <div class="form-container">
             <div class="input-group">
                 <label for="registration-email">Email</label>
@@ -69,11 +23,11 @@ if (isset($_POST["submit"]))
             </div>
             <div class="input-group">
                 <label for="registration-firstname">First name</label>
-                <input type="email" name="registration-firstname" id="registration-firstname" placeholder="First name">
+                <input type="text" name="registration-firstname" id="registration-firstname" placeholder="First name">
             </div>
             <div class="input-group">
                 <label for="registration-lastname">Last name</label>
-                <input type="email" name="registration-lastname" id="registration-lastname" placeholder="Last name">
+                <input type="text" name="registration-lastname" id="registration-lastname" placeholder="Last name">
             </div>
             <div class="input-group">
                 <label for="registration-password">Password</label>
@@ -86,7 +40,7 @@ if (isset($_POST["submit"]))
             <button type="submit" name="registration-submit" id="registration-submit">Sign up</button>
             <div class="input-group">
                 Already have an account?
-                <button onclick="load(PAGES.LOGIN)">
+                <button type="button" onclick="load(PAGES.LOGIN);">
                     Sign in
                 </button>
             </div>

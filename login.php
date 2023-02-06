@@ -10,55 +10,12 @@
 </head>
 
 <body>
-
-<?php
-require_once "app/include/path.php";
-require_once "app/services/ValidationService.php";
-require_once "app/dao/UserDAO.php";
-
-include "app/include/header.php";
-
-$errorMsg = "";
-
-if (isset($_POST["login-submit"]))
-{
-    $validationService = new ValidationService();
-    $email = $validationService->validate($_POST["login-email"]);
-    $password = $validationService->validate($_POST["login-password"]);
-
-    if ($email === "" || $password === "")
-    {
-        $errorMsg = "Incorrect email or password";
-    }
-    else
-    {
-        $userDao = new UserDAO();
-        $user = $userDao->findByEmail($email);
-
-        if (!password_verify($password, $user->getPasswordHash()))
-        {
-            $errorMsg = "Incorrect email or password";
-        }
-        else
-        {
-            $_SESSION["email"] = $user->getEmail();
-            $_SESSION["first_name"] = $user->getFirstName();
-
-            header("Location: " . BASE_URL);
-        }
-    }
-}
-?>
+<?php include "app/include/header.php"; ?>
 
 <div class="container">
     <h3>Sign in to News Portal</h3>
-    <?php if ($errorMsg != ""): ?>
-        <div class="form-warning">;
-            <?php echo $errorMsg; ?>
-        </div>
-    <?php endif; ?>
-
-    <form action="login.php" method="post">
+    <?php include "app/include/error.php"; ?>
+    <form action="app/controllers/UserController.php" method="post">
         <div class="form-container">
             <div class="input-group">
                 <label for="login-email">Email</label>
@@ -71,7 +28,7 @@ if (isset($_POST["login-submit"]))
             <button type="submit" name="login-submit" id="login-submit">Sign in</button>
             <div class="input-group">
                 New to News Portal?
-                <button onclick="load(PAGES.REGISTRATION)">
+                <button type="button" onclick="load(PAGES.REGISTRATION);">
                     Create an account
                 </button>
             </div>

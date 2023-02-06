@@ -11,9 +11,8 @@
 
 <body>
 <?php
-require_once "app/include/path.php";
-require_once "app/dao/ArticleDAO.php";
-require_once "app/model/Article.php";
+require "app/dao/ArticleDAO.php";
+require "app/model/Article.php";
 
 include "app/include/header.php";
 ?>

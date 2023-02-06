@@ -1,25 +1,25 @@
 <?php
 
-require_once "BaseDAO.php";
-require_once "app/model/User.php";
+require "BaseDAO.php";
+require __DIR__ . "/../model/User.php";
 
 class UserDAO extends BaseDAO
 {
-    public function save(User $user): void
+    public function save(string $email, string $passwordHash, string $firstname, string $lastname): void
     {
         $query = "insert into news.users (email, password_hash, first_name, last_name) values (:email, :password_hash, :first_name, :last_name)";
         $this->executePrepared(
             $query,
             [
-                ':email' => $user->getEmail(),
-                ':password_hash' => $user->getPasswordHash(),
-                ':first_name' => $user->getFirstName(),
-                ':last_name' => $user->getLastName()
+                ':email' => $email,
+                ':password_hash' => $passwordHash,
+                ':first_name' => $firstname,
+                ':last_name' => $lastname
             ]
         );
     }
 
-    public function findById(string $id): User
+    public function findById(string $id): ?User
     {
         $query = "select * from news.users where id = :id";
         $stmt = $this->conn->prepare($query);
@@ -27,10 +27,10 @@ class UserDAO extends BaseDAO
             ':id' => $id
         ]);
         $result = $stmt->fetch();
-        return User::fromArray($result);
+        return $result ? User::fromArray($result) : null;
     }
 
-    public function findByEmail(string $email): User
+    public function findByEmail(string $email): ?User
     {
         $query = "select * from news.users where email = :email";
         $stmt = $this->conn->prepare($query);
@@ -38,7 +38,7 @@ class UserDAO extends BaseDAO
             ':email' => $email
         ]);
         $result = $stmt->fetch();
-        return User::fromArray($result);
+        return $result ? User::fromArray($result) : null;
     }
 
     /**
